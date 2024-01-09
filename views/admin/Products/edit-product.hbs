@@ -1,0 +1,46 @@
+<section>
+    <div class="container mt-4">
+        <a href="/admin" class="btn btn-success mt-5" style="margin-right: 50px; "> Back</a>
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <h2 class="text-center">Edit Product</h2>
+                <form action="/admin/product-panel/edit-product/{{product._id}}" method="POST"
+                    enctype="multipart/form-data">
+
+                    <label for="">Product Name</label>
+                    <input type="text" name="Name" class="form-control" value="{{product.Name}}">
+
+                    <label for="">Price</label>
+                    <input type="text" name="Price" class="form-control" value="{{product.Price}}">
+                    
+                    <label for="">Description</label>
+                    <input type="text" name="Description" class="form-control" value="{{product.Description}}">
+
+                    <label for="">Image</label>
+                    <img src="/product-images/{{product._id}}1.jpg" class="mt-3" alt=""
+                        style="width: 100px;height: 100px;" id="imgView">
+                    <input type="file" name="image" class="form-control mt-3" onchange="viewImage(event)">
+
+                    <label for="">Image2</label>
+                    <img src="/product-images/{{product._id}}2.jpg" class="mt-3" alt=""
+                        style="width: 100px;height: 100px;" id="imgView2">
+                    <input type="file" name="image2" class="form-control mt-3" onchange="viewImage2(event)">
+
+                    <button type="submit" class="btn btn-success mt-4">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function viewImage(event) {
+        document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage2(event) {
+        document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+    }
+</script>

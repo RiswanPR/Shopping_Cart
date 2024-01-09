@@ -1,0 +1,30 @@
+<section>
+    <div class="container mt-4">
+        <a href="/admin" class="btn btn-success mt-5" style="margin-right: 50px; "> Back</a>
+        <div class="row">
+
+
+            <div class="col-md-12">
+                <h2 class="text-center">Edit Product</h2>
+                <form action="/admin/edit-coupons/{{coupons._id}}" method="POST"
+                    enctype="multipart/form-data">
+
+                    <label for="">Coupons Name</label>
+                    <input type="text" name="Name" class="form-control" value="{{coupons.Name}}">
+
+                    <label for="">Offer Price</label>
+                    <input type="text" name="Price" class="form-control" value="{{coupons.Price}}">
+                    
+                    <label for="">Coupon Code</label>
+                    <input type="text" name="Coupon_Code" class="form-control" value="{{coupons.Coupon_Code}}">
+
+                    <input type="text" name="Verify" class="form-control" value="Succuess" hidden>
+
+                    <button type="submit" class="btn btn-success mt-4">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,40 @@
+<section>
+    <div class="container mt-4">
+        {{!-- <a href="/admin/Advance-edit-order/{{order._id}}"
+            onclick="return confirm('Are You Sure Continue To Advanced Edit Option')" class="btn btn-primary mt-5"
+            style="margin-right: 50px; "> Make Advanced Edit</a> --}}
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="text-center">Order Status</h2>
+                <form action="/admin/edit-order/{{order._id}}" method="POST" enctype="multipart/form-data">
+
+                    <label for="">Name</label>
+                    <input type="text" name="Name" class="form-control" value="{{order.DelivaryDetails.FName}}" disabled>
+
+                    <label for="">Ordered Date</label>
+                    <input type="text" name="Name" class="form-control" value="{{order.date}}" disabled>
+
+                    <label for="">Order Status</label>
+                    <br>             
+                      <input type="radio" id="Placed" name="status" value="Placed" checked>
+                      <label for="Placed">Placed</label><br>
+                      <input type="radio" id="Shipped" name="status" value="Shipped">
+                      <label for="Shipped">Shipped</label><br>                 
+                      <input type="radio" id="Delivered" name="status" value="Delivered">
+                      <label for="Delivered">Delivered</label><br>
+                      <input type="radio" id="Cancelled" name="status" value="Cancelled">
+                      <label for="Cancelled">Cancelled</label><br>
+                     
+                    <label for="">Delivery Date</label>
+                    <input type="text" name="DeliverDate" class="form-control" value="{{order.DeliverDate}}">
+                     <p style="color: red;">Change Only In This Format</p>
+
+                    <input type="text" name="Verify" class="form-control" value="Succuess" hidden>
+
+                    <button type="submit" class="btn btn-success mt-4">Submit</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

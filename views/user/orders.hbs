@@ -1,0 +1,348 @@
+<section>
+  <div class="container">
+    <h1 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" class="mt-5">My Orders</h1>
+    <hr>
+    <br>
+
+    <div class="row">
+      {{#if ordersErr}}
+      <div class="container pt-3">
+        <h1 style="font-size: xx-large;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+          No Order Found </h1>
+        <p>Make An Order First</p>
+        <a href="/shop" class="btn btn-success mb-5">Shop</a>
+      </div>
+
+      {{else}}
+
+      {{#each placedOrders}}
+      <div class="col-md-12 col-lg-6 col-xl-6 mt-5 mb-5">
+        <div class="card card-stepper" style="border-radius: 16px;">
+          <div class="card-header" style="background-color: darkorange;">
+            <div class="d-flex justify-content-between align-items-center" style="background-color: darkorange;">
+              <div style="background-color: darkorange;">
+                <p class="mb-2" style="color: whitesmoke;"> Order ID <span style="color: yellow;"
+                    class=" ">{{this._id}}</span>
+                </p>
+                <p class=" mb-0" style="color: whitesmoke;"> Place On <span style="color: yellow;">{{this.date}}
+                  </span> </p>
+              </div>
+
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="d-flex flex-row mb-4 pb-2">
+              <div class="flex-fill">
+
+                <h4 class="mb-3"> ₹ {{this.total}} <span class="small text-muted"> via ({{this.PaymentMethod}})
+                  </span></h4>
+                <p class="text-muted">Name : <span class="text-body"> {{this.DelivaryDetails.FName}}
+                    {{this.DelivaryDetails.LName}}
+                  </span>
+                <p class="text-muted">Phone Number: <span class="text-body"> {{this.DelivaryDetails.Phone_Number}}
+                  </span>
+                </p>
+                <p class="text-muted">Address: <span class="text-body"> {{this.DelivaryDetails.Address}},
+                    {{this.DelivaryDetails.Town}},{{this.DelivaryDetails.District}},
+                    {{this.DelivaryDetails.ZipCode}}</span>
+                </p>
+                <p class="text-muted">Order Status : <span class="text-body">{{this.status}}</span>
+
+
+                </p>
+
+              </div>
+              <div>
+                <a href="/view-products/{{this._id}}"><button class="btn btn-primary">View Products</button></a>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer p-4">
+            <div class="d-flex justify-content-between">
+              <h5 class="fw-nor mal mb-0"><a href="#!">Track</a></h5>
+              <div class="border-start h-100"></div>
+              <h5 class="fw-normal mb-0"><a href="/cancel/{{this._id}}">Cancel</a></h5>
+              <div class="border-start h-100"></div>
+              <h5 class="fw-normal mb-0"><a href="#!">Pre-pay</a></h5>
+              <div class="border-start h-100"></div>
+              <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      {{/each}}
+
+      {{#each shippedOrders}}
+      <div class="col-md-12 col-lg-6 col-xl-6 mt-5 mb-5">
+        <div class="card card-stepper" style="border-radius: 16px;">
+          <div class="card-header" style="background-color: darkseagreen;">
+            <div class="d-flex justify-content-between align-items-center" style="background-color: darkseagreen;">
+              <div style="background-color: darkseagreen;">
+                <p class="mb-2" style="color: darkslateblue;font-weight: 800;"> Order ID <span style="color: rgb(98, 96, 70);"
+                    class=" ">{{this._id}}</span>
+                </p>
+                <p class=" mb-0" style="color: darkslateblue;font-weight: 800;"> Place On <span style="color:  rgb(98, 96, 70);">{{this.date}}
+                  </span> </p>
+              </div>
+
+            </div>
+          </div>
+          <div class="card-body ">
+            <div class="d-flex flex-row mb-4 pb-2">
+              <div class="flex-fill">
+
+                <h4 class="mb-3"> ₹ {{this.total}} <span class="small text-muted"> via ({{this.PaymentMethod}})
+                  </span></h4>
+                <p class="text-muted">Name : <span class="text-body"> {{this.DelivaryDetails.FName}}
+                    {{this.DelivaryDetails.LName}}
+                  </span>
+                <p class="text-muted">Phone Number: <span class="text-body"> {{this.DelivaryDetails.Phone_Number}}
+                  </span>
+                </p>
+                <p class="text-muted">Address: <span class="text-body"> {{this.DelivaryDetails.Address}},
+                    {{this.DelivaryDetails.Town}},{{this.DelivaryDetails.District}},
+                    {{this.DelivaryDetails.ZipCode}}</span>
+                </p>
+                <p class="text-muted">Order Status : <span class="text-body">{{this.status}}</span>
+
+
+                </p>
+
+              </div>
+              <div>
+                <a href="/view-products/{{this._id}}"><button class="btn btn-primary">View Products</button></a>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer p-4">
+            <div class="d-flex justify-content-between">
+              <h5 class="fw-nor mal mb-0"><a href="#!">Track</a></h5>
+              <div class="border-start h-100"></div>
+              <h5 class="fw-normal mb-0"><a href="/cancel/{{this._id}}">Cancel</a></h5>
+              <div class="border-start h-100"></div>
+              <h5 class="fw-normal mb-0"><a href="#!">Pre-pay</a></h5>
+              <div class="border-start h-100"></div>
+              <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      {{/each}}
+
+
+    {{#each cancelOrders}}
+    <div class="col-md-12 col-lg-6 col-xl-6 mt-5 mb-5">
+      <div class="card card-stepper" style="border-radius: 16px;">
+        <div class="card-header" style="background-color: red;">
+          <div class="d-flex justify-content-between align-items-center" style="background-color: red;">
+            <div style="background-color: red;">
+              <p class="mb-2" style="color: whitesmoke;"> Order ID <span style="color: yellow;"
+                  class=" ">{{this._id}}</span>
+              </p>
+              <p class=" mb-0" style="color: whitesmoke;"> Place On <span style="color: yellow;">{{this.date}}
+                </span> </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="card-body ">
+          <div class="d-flex flex-row mb-4 pb-2">
+            <div class="flex-fill">
+
+              <h4 class="mb-3"> ₹ {{this.total}} <span class="small text-muted"> via ({{this.PaymentMethod}})
+                </span></h4>
+              <p class="text-muted">Name : <span class="text-body"> {{this.DelivaryDetails.FName}}
+                  {{this.DelivaryDetails.LName}}
+                </span>
+              <p class="text-muted">Phone Number: <span class="text-body"> {{this.DelivaryDetails.Phone_Number}}
+                </span>
+              </p>
+              <p class="text-muted">Address: <span class="text-body"> {{this.DelivaryDetails.Address}},
+                  {{this.DelivaryDetails.Town}},{{this.DelivaryDetails.District}},
+                  {{this.DelivaryDetails.ZipCode}}</span>
+              </p>
+              <p class="text-muted">Order Status : <span class="text-body">{{this.status}}</span>
+
+
+              </p>
+
+            </div>
+            <div>
+              <a href="/view-products/{{this._id}}"><button class="btn btn-primary">View Products</button></a>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-footer p-4">
+          <div class="d-flex justify-content-between">
+            <h5 class="fw-nor mal mb-0"><a href="#!">Track</a></h5>
+            <div class="border-start h-100"></div>
+            <h5 class="fw-normal mb-0"><a href="/cancel/{{this._id}}">Cancel</a></h5>
+            <div class="border-start h-100"></div>
+            <h5 class="fw-normal mb-0"><a href="#!">Pre-pay</a></h5>
+            <div class="border-start h-100"></div>
+            <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    {{/each}}
+ 
+
+
+  {{#each deliveredOrders}}
+  <div class="col-md-12 col-lg-6 col-xl-6 mt-5 mb-5">
+    <div class="card card-stepper" style="border-radius: 16px;">
+      <div class="card-header" style="background-color: green;">
+        <div class="d-flex justify-content-between align-items-center" style="background-color: green;">
+          <div style="background-color: green;">
+            <p class="mb-2" style="color: whitesmoke;"> Order ID <span style="color: yellow;"
+                class=" ">{{this._id}}</span>
+            </p>
+            <p class=" mb-0" style="color: whitesmoke;"> Place On <span style="color: yellow;">{{this.date}}
+              </span> </p>
+          </div>
+
+        </div>
+      </div>
+      <div class="card-body ">
+        <div class="d-flex flex-row mb-4 pb-2">
+          <div class="flex-fill">
+
+            <h4 class="mb-3"> ₹ {{this.total}} <span class="small text-muted"> via ({{this.PaymentMethod}})
+              </span></h4>
+            <p class="text-muted">Name : <span class="text-body"> {{this.DelivaryDetails.FName}}
+                {{this.DelivaryDetails.LName}}
+              </span>
+            <p class="text-muted">Phone Number: <span class="text-body"> {{this.DelivaryDetails.Phone_Number}}
+              </span>
+            </p>
+            <p class="text-muted">Address: <span class="text-body"> {{this.DelivaryDetails.Address}},
+                {{this.DelivaryDetails.Town}},{{this.DelivaryDetails.District}},
+                {{this.DelivaryDetails.ZipCode}}</span>
+            </p>
+            <p class="text-muted">Order Status : <span class="text-body">{{this.status}}</span>
+
+
+            </p>
+
+          </div>
+          <div>
+            <a href="/view-products/{{this._id}}"><button class="btn btn-primary">View Products</button></a>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-footer p-4">
+        <div class="d-flex justify-content-between">
+          <h5 class="fw-nor mal mb-0"><a href="#!">Track</a></h5>
+          <div class="border-start h-100"></div>
+          <h5 class="fw-normal mb-0"><a href="/cancel/{{this._id}}">Cancel</a></h5>
+          <div class="border-start h-100"></div>
+          <h5 class="fw-normal mb-0"><a href="#!">Pre-pay</a></h5>
+          <div class="border-start h-100"></div>
+          <h5 class="fw-normal mb-0"><a href="#!" class="text-muted"><i class="fas fa-ellipsis-v"></i></a>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  {{/each}}
+
+  {{/if}}
+  </div>
+  </div>
+</section>
+
+<style>
+  #progressbar-1 {
+    color: #455A64;
+  }
+
+  #progressbar-1 li {
+    list-style-type: none;
+    font-size: 13px;
+    width: 33.33%;
+    float: left;
+    position: relative;
+  }
+
+  #progressbar-1 #step1:before {
+    content: "1";
+    color: #fff;
+    width: 29px;
+    margin-left: 22px;
+    padding-left: 11px;
+  }
+
+  #progressbar-1 #step2:before {
+    content: "2";
+    color: #fff;
+    width: 29px;
+  }
+
+  #progressbar-1 #step3:before {
+    content: "3";
+    color: #fff;
+    width: 29px;
+    margin-right: 22px;
+    text-align: center;
+  }
+
+  #progressbar-1 li:before {
+    line-height: 29px;
+    display: block;
+    font-size: 12px;
+    background: #455A64;
+    border-radius: 50%;
+    margin: auto;
+  }
+
+  #progressbar-1 li:after {
+    content: '';
+    width: 129%;
+    height: 2px;
+    background: #455A64;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 15px;
+    z-index: -1;
+  }
+
+  #progressbar-1 li:nth-child(2):after {
+    left: 50%
+  }
+
+  #progressbar-1 li:nth-child(1):after {
+    left: 25%;
+    width: 121%
+  }
+
+  #progressbar-1 li:nth-child(3):after {
+    left: 25%;
+    width: 50%;
+  }
+
+  #progressbar-1 li.active:before,
+  #progressbar-1 li.active:after {
+    background: #1266f1;
+  }
+
+  .card-stepper {
+    z-index: 0
+  }
+</style>

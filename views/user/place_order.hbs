@@ -1,0 +1,112 @@
+<div class="cart-table-area section-padding-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-4">
+                <div class="cart-summary">
+                    <h5>Cart Total</h5>
+                    <ul class="summary-table">
+                        <li><span>Sub Total:</span> <span>Rs : {{Subtotal}}</span></li>
+                        <li><span>Delivery:</span> <span>Rs : {{charge}}</span></li>
+                        <li><span>Total:</span> <span>Rs : {{total}}</span></li>
+                    </ul>
+                    <hr>
+
+                </div>
+            </div>
+            <div class="col-12 col-lg-8">
+                <div class="checkout_details_area mt-50 clearfix">
+
+                    <div class="cart-title">
+                        <h2>Checkout</h2>
+                    </div>
+
+                    <form id="Checkout-Form">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" id="first_name" value="" name="Fname"
+                                    placeholder="First Name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" id="last_name" value="" placeholder="Last Name"
+                                    name="Lname" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="Email" value=""
+                                    name="Email" required>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control" id="District" placeholder="District" value=""
+                                    name="District" required>
+                            </div>
+
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control mb-3" id="street_address" placeholder="Address"
+                                    name="Address" value="" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <input type="text" class="form-control" id="city" placeholder="Town" value=""
+                                    name="Town" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="text" class="form-control" id="zipCode" placeholder="Zip Code"
+                                    name="ZipCode" value="" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <input type="number" class="form-control" id="phone_number" min="0000000000"
+                                    name="Phone_Number" placeholder="Phone No" value="" required>
+                             <input type="text" class="form-control"
+                                    name="userId" value="{{user._id}}" hidden>
+                            </div>
+
+                            <!-- Cash on delivery -->
+                            <div class="custom-control custom-checkbox mr-sm-2">
+
+                                <input type="radio" id="COD" name="PaymentMethod" value="COD">
+                                <label for="COD">Cash on Delivery</label>
+
+                            </div>
+                            <!-- Razorpay -->
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="radio" id="ONLINE" name="PaymentMethod" value="ONLINE">
+                                <label for="ONLINE">Razorpay<img class="ml-15" src="/img/core-img/paypal.png"
+                                        alt=""></label>
+
+                            </div>
+
+
+
+                            <div class="cart-btn mt-30">
+                                <input class="btn amado-btn w-100" type="submit">
+                                {{!-- <a href="#" class="">Checkout</a> --}}
+                            </div>
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>
+<!-- ##### Main Content Wrapper End ##### -->
+<script>
+    $("#Checkout-Form").submit((e)=>{
+        e.preventDefault();
+        $.ajax({
+            url: '/place-order',
+            method: 'post',
+            data: $('#Checkout-Form').serialize(),
+            success: (response)=>{
+                alert(response)
+                if(response.status){
+                    location.href='/Order-Checkout'
+                }
+            }
+        })
+        
+    })
+</script>

@@ -1,0 +1,102 @@
+
+<div class="container">
+    <a style="width: 15%;" class="btn btn-success ml-auto" href="/admin/product-panel/product/add-product">Add Product</a>
+
+
+    <h1 style="font-family: 'Times New Roman', Times, serif;color: blue;" class="text-center">Bed Panel</h1>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <table class="table table-striped-columns table-hover table-bordered table-group-divider" id="myTable">
+        <thead>
+            <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price (Rs . )</th>
+                <th scope="col">Category</th>
+                <th scope="col">Description</th>
+                <th scope="col">Image</th>
+                <th scope="col">Image 2</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+            <tr>
+                <td>{{this.Name}}</td>
+                <td>{{this.Price}}</td>
+                <td>{{this.Category}}</td>
+                <td>{{this.Description}}</td>
+                <td><img style="width: 50px;height: 50px;" src="/product-images/{{this._id}}1.jpg" alt=""></td>
+                <td><img style="width: 50px;height: 50px;" src="/product-images/{{this._id}}2.jpg" alt=""></td>
+                <td> <a class="btn btn-primary" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/product-panel/edit-product/{{this._id}}">Edit Product</a></td>
+                <td> <a class="btn btn-danger" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/product-panel/delete-product/{{this._id}}"
+                        onclick=" return confirm('Are You Sure {{this.Name}} Project is Delete')">Delete</a></td>
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    #myInput {
+        background-image: url('/css/searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    #myTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+    #myTable th,
+    #myTable td {
+        text-align: left;
+        padding: 12px;
+    }
+
+    #myTable tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myTable tr.header,
+    #myTable tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

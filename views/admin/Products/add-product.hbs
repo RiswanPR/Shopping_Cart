@@ -1,0 +1,85 @@
+{{!-- <H1 class="text-center"><b>Add Product</b></H1>
+<form style="width: 80%;" action="/admin/add-product" method="post" enctype="multipart/form-data">
+  <div style="margin-left: 300px;" class="mb-3">
+    <label class="form-label">Product Name</label>
+    <input type="text" class="form-control" name="Name" placeholder="Product Name">
+  </div>
+  <div style="margin-left: 300px;" class="mb-3">
+    <label class="form-label">Price</label>
+    <input type="" class="form-control" name="Price" placeholder="Price">
+  </div>
+  <div style="margin-left: 300px;" class="mb-3">
+    <label class="form-label">Category</label>
+    <input type="text" class="form-control" name="Category" placeholder="Category">
+  </div>
+  <div style="margin-left: 300px;" class="mb-3">
+    <label class="form-label">Description</label>
+    <input type="text" class="form-control" name="Description" placeholder="Description">
+  </div>
+  <div style="margin-left: 300px;" class="mb-3">
+    <label class="form-label">Image</label>
+    <input type="file" class="form-control" name="Image">
+  </div> --}}
+
+  <section>
+    <div class="container mt-5">
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <h2 class="text-center"><strong><b>Add Product</b></strong></h2>
+          <form action="/admin/product-panel/product/add-product" method="POST" enctype="multipart/form-data">
+            <label for="">Product Name</label>
+            <input type="text" name="Name" class="form-control">
+
+            <label for="">Price</label>
+            <input type="text" name="Price" class="form-control">
+
+            <label for="">Category</label>
+            <br>
+              <input type="radio" id="html" name="Category" value="Chairs">
+              <label for="Chairs">Chairs</label><br>
+              <input type="radio" id="Beds" name="Category" value="Beds">
+              <label for="Beds">Beds</label><br>
+              <input type="radio" id="Furniture" name="Category" value="Furniture">
+              <label for="Furniture">Furniture</label><br>
+              <input type="radio" id="HomeDeco" name="Category" value="HomeDeco">
+              <label for="HomeDeco"> Home Deco</label><br>
+              <input type="radio" id="Dressing" name="Category" value="Dressing">
+              <label for="Dressing">Dressing</label><br>
+              <input type="radio" id="Tables" name="Category" value="Tables">
+              <label for="Tables">Tables</label><br>
+
+            <label for="">Description</label>
+            <input type="text" name="Description" class="form-control">
+
+            {{!-- <label for="">Image Width In Pixel</label>
+            <input type="text" name="Width" class="form-control">
+
+            <label for="">Image height In Pixel</label>
+            <input type="text" name="Height" class="form-control"> --}}
+
+            <label for="">Image</label>
+            <img src="/img/core-img/upload.jpg" alt="" style="width: 100px;height: 100px;" id="imgView">
+            <input type="file" name="image" class="form-control mt-5" onchange="viewImage(event)">
+
+            <label for="">Image2</label>
+            <img src="/img/core-img/upload.jpg" alt="" style="width: 100px;height: 100px;" id="imgView2">
+            <input type="file" name="image2" class="form-control mt-5" onchange="viewImage2(event)">
+
+            <button type="submit" class="btn btn-success mt-4">Submit</button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function viewImage(event) {
+      document.getElementById('imgView').src = URL.createObjectURL(event.target.files[0])
+    }
+    function viewImage2(event) {
+      document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+    }
+  </script>

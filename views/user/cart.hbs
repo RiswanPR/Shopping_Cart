@@ -1,0 +1,108 @@
+<div class="cart-table-area section-padding-100">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="cart-title mt-50">
+                    <h2 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"> Cart</h2>
+                </div>
+
+                <div class="cart-table clearfix">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each products}}
+                            <tr>
+                                <td class="cart_product_img">
+                                    <a><img style="height: 5%;    width: 40%;"
+                                            src="/product-images/{{this.product._id}}1.jpg" alt="Product"></a>
+                                </td>
+
+                                <td class="cart_product_desc">
+                                    <h5>{{this.product.Name}}</h5>
+                                </td>
+
+                                <td class="price">
+                                    <span>Rs . {{this.product.Price}}</span>
+                                </td>
+
+                                <td class="qty">
+                                    <div class="btn-group">
+
+                                        <button class="cart-item-count mr-3 p-2 btn btn-danger"
+                                            onclick="changeQuantity('{{this._id}}','{{this.product._id}}',-1)">-</button>
+
+                                        <span id="{{this.product._id}}">{{this.quantity}}</span>
+
+                                        <button class="cart-item-count ml-3 p-2 btn btn-success"
+                                            onclick="changeQuantity('{{this._id}}','{{this.product._id}}',1)">+</button>
+
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <div class="col-12 col-lg-3">
+                <div class="cart-summary">
+                    <form method="post" id="Coupon-Form">
+                        <label for="">Coupon Code</label>
+                        <input name="coupon" placeholder="Coupon Code" type="text">
+                        <input  class="btn btn-success mt-2 mr-3" style="float: right;" type="submit">
+                    </form>
+                    <br>
+                    <br>
+                    <h5>Cart Total</h5>
+                    <ul class="summary-table">
+                        <li><span>Sub Total:</span> <span>Rs : {{Subtotal}}</span></li>
+                        <li><span>Delivery:</span> <span>Rs : {{charge}}</span></li>
+                        {{#if couponSuccess}}
+                        <li><span>Discounted Amount:</span> <span style="color: red;">Rs : {{coupon}}</span></li>
+                        {{else if couponFailure}}
+                        <li><span style="color: red;">{{err}}</span></li>
+                        {{else}}
+
+                        {{/if}}
+                        <li><span>Total:</span> <span>Rs : {{total}}</span></li>
+                    </ul>
+
+                    <div class="cart-btn mt-100">
+                        <a href="/place-order" class="btn amado-btn w-100">Checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#Coupon-Form").submit((e) => {
+        
+        e.preventDefault();
+        $.ajax({
+            url: '/cart',
+            method: 'post',
+            data: $('#Coupon-Form').serialize(),
+            success: (response) => {
+                alert(response)
+                if (response.status) {
+                    location.reload()
+                } else {
+                    location.reload()
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,184 @@
+<div class="container">
+    <a href="/admin" class="btn btn-primary pl-5 pr-5 mt-3"
+        style="font-size: larger; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Back</a>
+    <h1 style="font-family: 'Times New Roman', Times, serif;color: blue;" class="text-center mt-5">View Orders</h1>
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+    <table class="table table-striped-columns table-hover table-bordered table-group-divider" id="myTable">
+        <thead>
+            <tr>
+                {{!-- <th scope="col">Order Id</th> --}}
+                <th scope="col">Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Delivary Address</th>
+                <th scope="col">Payment Method</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Order Status</th>
+                <th scope="col">Delivary Date</th>
+                <th scope="col">Actions</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each placedOrders}}
+            <tr style="background-color: lightsalmon;">
+                {{!-- <td>{{this._id}}</td> --}}
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.FName}} {{this.DelivaryDetails.LName}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Phone_Number}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Address}}, {{this.DelivaryDetails.Town}}, {{this.DelivaryDetails.District}},
+                    {{this.DelivaryDetails.ZipCode}}</td>
+                <td style="font-weight: bolder;">{{this.PaymentMethod}}</td>
+                <td style="font-weight: bolder;">{{this.date}}</td>
+                <td style="font-weight: bolder;">{{this.status}}</td>
+                <td style="font-weight: bolder;">{{this.DeliverDate}}</td>
+                <td style="font-weight: bolder;"> <a class="btn btn-info " style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/view-products/{{this._id}}">View Products</a>
+                    <a class="btn btn-primary mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/edit-order/{{this._id}}">Edit Order</a>
+                    <a class="btn btn-danger mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/delete-order/{{this._id}}"
+                        onclick="return confirm('Are You Sure {{this.DelivaryDetails.FName}} Order Is Delete From User Reminder: Inform The User About Canelling The Order') ">Delete
+                        Order</a>
+                </td>
+
+            </tr>
+           
+            {{/each}}
+
+             {{#each shippedOrders}}
+            <tr style="background-color: lightpink ;">
+                {{!-- <td>{{this._id}}</td> --}}
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.FName}} {{this.DelivaryDetails.LName}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Phone_Number}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Address}}, {{this.DelivaryDetails.Town}}, {{this.DelivaryDetails.District}},
+                    {{this.DelivaryDetails.ZipCode}}</td>
+                <td style="font-weight: bolder;">{{this.PaymentMethod}}</td>
+                <td style="font-weight: bolder;">{{this.date}}</td>
+                <td style="font-weight: bolder;">{{this.status}}</td>
+                <td style="font-weight: bolder;">{{this.DeliverDate}}</td>
+                <td     style="font-weight: bolder;"> <a class="btn btn-info " style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/view-products/{{this._id}}">View Products</a>
+                    <a class="btn btn-primary mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/edit-order/{{this._id}}">Edit Order</a>
+                    <a class="btn btn-danger mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/delete-order/{{this._id}}"
+                        onclick="return confirm('Are You Sure {{this.DelivaryDetails.FName}} Order Is Delete From User Reminder: Inform The User About Canelling The Order') ">Delete
+                        Order</a>
+                </td>
+
+            </tr>
+            {{/each}}
+
+              {{#each deliveredOrders}}
+            <tr style="background-color: lightgreen ;">
+                {{!-- <td>{{this._id}}</td> --}}
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.FName}} {{this.DelivaryDetails.LName}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Phone_Number}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Address}}, {{this.DelivaryDetails.Town}}, {{this.DelivaryDetails.District}},
+                    {{this.DelivaryDetails.ZipCode}}</td>
+                <td style="font-weight: bolder;">{{this.PaymentMethod}}</td>
+                <td style="font-weight: bolder;">{{this.date}}</td>
+                <td style="font-weight: bolder;">{{this.status}}</td>
+                <td style="font-weight: bolder;">{{this.DeliverDate}}</td>
+                <td     style="font-weight: bolder;"> <a class="btn btn-info " style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/view-products/{{this._id}}">View Products</a>
+                    <a class="btn btn-primary mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/edit-order/{{this._id}}">Edit Order</a>
+                    <a class="btn btn-danger mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/delete-order/{{this._id}}"
+                        onclick="return confirm('Are You Sure {{this.DelivaryDetails.FName}} Order Is Delete From User Reminder: Inform The User About Canelling The Order') ">Delete
+                        Order</a>
+                </td>
+
+            </tr>
+            {{/each}}
+
+
+            {{#each cancelOrders}}
+            <tr style="background-color: lightcoral ;">
+                {{!-- <td>{{this._id}}</td> --}}
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.FName}} {{this.DelivaryDetails.LName}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Phone_Number}}</td>
+                <td style="font-weight: bolder;">{{this.DelivaryDetails.Address}}, {{this.DelivaryDetails.Town}}, {{this.DelivaryDetails.District}},
+                    {{this.DelivaryDetails.ZipCode}}</td>
+                <td style="font-weight: bolder;">{{this.PaymentMethod}}</td>
+                <td style="font-weight: bolder;">{{this.date}}</td>
+                <td style="font-weight: bolder;">{{this.status}}</td>
+                <td style="font-weight: bolder;">{{this.DeliverDate}}</td>
+                <td     style="font-weight: bolder;"> <a class="btn btn-info " style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/view-products/{{this._id}}">View Products</a>
+                    <a class="btn btn-primary mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/edit-order/{{this._id}}">Edit Order</a>
+                    <a class="btn btn-danger mt-2" style="font-family:Verdana, Geneva, Tahoma, sans-serif;"
+                        href="/admin/delete-order/{{this._id}}"
+                        onclick="return confirm('Are You Sure {{this.DelivaryDetails.FName}} Order Is Delete From User Reminder: Inform The User About Canelling The Order') ">Delete
+                        Order</a>
+                </td>
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+</div>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    #myInput {
+        background-image: url('/css/searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    #myTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+    #myTable th,
+    #myTable td {
+        text-align: left;
+        padding: 12px;
+    }
+
+    #myTable tr {
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myTable tr.header,
+    #myTable tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
