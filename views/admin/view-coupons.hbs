@@ -7,6 +7,9 @@
     style="font-size: larger; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Back</a>
 
     <h1 style="font-family: 'Times New Roman', Times, serif;color: blue;" class="text-center">View Coupons</h1>
+    {{#if CouponErr}}
+        <p style="font-family: 'Times New Roman', Times, serif;color: red;">In That Price Coupon Already Exists</p>
+    {{/if}}
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
     <table class="table table-striped-columns table-hover table-bordered table-group-divider" id="myTable">
         <thead>
@@ -19,7 +22,7 @@
             </tr>
         </thead>
         <tbody>
-
+        
             {{#each coupons}}
             <tr>
                 <td>{{this.Name}}</td>              

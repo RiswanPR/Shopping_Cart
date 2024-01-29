@@ -3,7 +3,7 @@ var router = express.Router();
 var productHelpers = require('../Helpers/product-helpers')
 var userHelpers = require('../Helpers/user-helpers')
 const Handlebars = require('handlebars');
-
+var CouponErr;
 Handlebars.registerHelper('isEqual', function (a, b, options) {
   if (a === b) {
     return options.fn(this);
@@ -125,7 +125,7 @@ router.post('/product-panel/edit-product/:id', verifyLogin, (req, res) => {
 
 router.get('/coupons', (req, res) => {
   userHelpers.getCoupons().then((coupons) => {
-    res.render('admin/view-coupons', { admins: true, coupons })
+    res.render('admin/view-coupons', { admins: true, coupons, CouponErr })
   })
 
 })
@@ -135,11 +135,19 @@ router.get('/add-coupons', verifyLogin, function (req, res, next) {
   res.render('admin/add-coupons', { admins: true })
 });
 
-router.post('/add-coupons', verifyLogin, (req, res) => {
+router.post('/add-coupons', verifyLogin, async (req, res) => {
 
-  userHelpers.addCoupons(req.body, (id) => {
-    res.redirect('/admin/coupons');
-  })
+  // let CouponAdd = await userHelpers.couponprice(req.body);
+  // if (CouponAdd == "ERROR") {
+  //   CouponErr = true;
+  //   res.redirect('/admin/coupons');
+  // } else if (CouponAdd == "SUCCESS") {
+    userHelpers.addCoupons(req.body, (id) => {
+      CouponErr = false;
+      res.redirect('/admin/coupons');  
+    })
+
+  // }
 
 })
 
@@ -151,14 +159,14 @@ router.get('/edit-coupons/:id', verifyLogin, async (req, res) => {
 
 router.post('/edit-coupons/:id', verifyLogin, (req, res) => {
   userHelpers.updateCoupons(req.params.id, req.body).then(() => {
-    res.redirect('/admin/coupons', { admins: true })
+    res.redirect('/admin/coupons',)
 
   })
 })
 router.get('/delete-coupons/:id', (req, res) => {
   let proId = req.params.id
   userHelpers.deleteCoupons(proId).then((response) => {
-    res.redirect('/admin/coupons', { admins: true })
+    res.redirect('/admin/coupons')
   })
 })
 

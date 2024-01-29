@@ -58,8 +58,20 @@
                 <div class="cart-summary">
                     <form method="post" id="Coupon-Form">
                         <label for="">Coupon Code</label>
+                        {{#if couponSuccess}}
+                            <div class="row">
+                                <div class="col-md-9">
+                                     <input name="coupon" placeholder="Coupon Code" type="text" style="text-align: center; width: 110%;" value="{{couponCheck}}" disabled> 
+                                </div>  
+                                <div class="col-md-3">
+                                     <a id="Coupon-Delete" href="/Coupon-Delete" style="font-family: system-ui;height: 90%;text-align: center; " class="btn btn-danger"> X </a>
+                                </div>
+                            </div>
+                                                   
+                        {{else}}
                         <input name="coupon" placeholder="Coupon Code" type="text">
                         <input  class="btn btn-success mt-2 mr-3" style="float: right;" type="submit">
+                        {{/if}}
                     </form>
                     <br>
                     <br>
@@ -96,7 +108,7 @@
             method: 'post',
             data: $('#Coupon-Form').serialize(),
             success: (response) => {
-                alert(response)
+                // alert(response)
                 if (response.status) {
                     location.reload()
                 } else {
@@ -105,4 +117,6 @@
             }
         });
     });
+
+  
 </script>

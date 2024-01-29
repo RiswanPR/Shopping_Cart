@@ -5,6 +5,12 @@ const bcrypt = require('bcrypt');
 const { ObjectId } = require('mongodb');
 const { response } = require('express');
 const { Collection } = require('mongo');
+const Razorpay = require('razorpay');
+const { error } = require('jquery');
+var instance = new Razorpay({
+    key_id: 'rzp_test_1BNo3QWTFv1lZD',
+    key_secret: 'U96xsmoOABcPB9p4SsTqejTI',
+  });
 
 module.exports = {
     // doSignup: (userData) => {
@@ -386,7 +392,13 @@ module.exports = {
             console.log(orderObj);
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
-                resolve()
+                if (response.insertedId) {
+                 //   db.get().collection(collection.CART_COLLECTION).deleteOne({ user: new ObjectId(order.userId)});
+                    resolve(response.insertedId);
+                } else {
+                    reject(new Error("Order insertion failed: No response.insertedId"));
+                }
+                // resolve(response.ops[0]._id)
             })
         })
     },
@@ -454,14 +466,19 @@ module.exports = {
     CouponCheck: (CouponCode, userId) => {
         return new Promise(async (resolve, reject) => {
             let offer = 0;
-            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ Coupon_Code: CouponCode })
-            let UserExistence = await db.get().collection(collection.COUPON_COLLECTION).findOne({ VerifiedId: userId })
+            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({Coupon_Code: CouponCode})
+
+          //  let 
             if (coupon) {
                 console.log("Coupon : ", coupon);
                 offer = coupon.Price;
+
                 CouponActivation = {
-                    VerifiedId: userId
+                    VerifiedId: userId,
+                    CouponVerify: coupon._id
                 }
+                let CouponId = coupon._id;
+                let UserExistence = await db.get().collection(collection.COUPON_COLLECTION).findOne({VerifiedId: userId, CouponVerify : new ObjectId(CouponId)  })
                 if (UserExistence) {
                     console.log("Already Activated");
                 } else {
@@ -485,13 +502,33 @@ module.exports = {
         })
 
     },
-    addCoupons: (coupon, callback) => {
 
-
-        db.get().collection(collection.COUPON_COLLECTION).insertOne(coupon).then((data) => {
-            console.log(data);
-            callback(data.insertedId)
+    couponprice : (coupon, callback) => {
+        
+        return new Promise(async(resolve, reject) =>{
+            let couponPrice = coupon.Price;
+            console.log(couponPrice);
+            let couponExists = db.get().collection(collection.COUPON_COLLECTION).findOne({Price: couponPrice})
+            console.log(couponExists);
+            if (couponExists instanceof Promise){
+                var error = "ERROR";
+                console.log("ERROR: " + error);
+                resolve (error)
+            }else{
+                var Succuess = "SUCCESS";
+                console.log("Succuess: " + Succuess);
+                resolve (Succuess)
+            }
         })
+       
+    },
+    addCoupons : (coupon, callback) => {
+        
+            db.get().collection(collection.COUPON_COLLECTION).insertOne(coupon).then((data) => {
+                console.log(data);
+                callback(data.insertedId)
+            })
+       
     },
 
     getCouponDetails: (proId) => {
@@ -527,9 +564,9 @@ module.exports = {
     },
 
 
-    getUserAuthentication: (CheckUserId) => {
+    getUserAuthentication: (CheckUserId,CouponId) => {
         return new Promise(async (resolve, reject) => {
-            let User = await db.get().collection(collection.COUPON_COLLECTION).findOne({ VerifiedId: CheckUserId })
+            let User = await db.get().collection(collection.COUPON_COLLECTION).findOne({ VerifiedId: CheckUserId , CouponVerify: CouponId})
             console.log(User);
             resolve(User);
         })
@@ -632,6 +669,31 @@ module.exports = {
                 }).then((response) => {
                     resolve()
                 })
+        })
+    },
+
+    generateRazorpay:(orderId,total) => {
+        return new Promise((resolve, reject) => {
+            var options = {
+                amount: total,  // amount in the smallest currency unit
+                currency: "INR",
+                receipt: orderId
+              };
+              instance.orders.create(options, function(err, order) {
+                if (err) {
+                    console.log("Error", err);
+                }else{
+                    
+                }
+              });
+        })  
+    },
+    FindCouponById:(Coupon_Code)=>{
+        return new Promise((resolve, reject) => {
+            db.get().collection(collection.COUPON_COLLECTION).findOne({ Coupon_Code : Coupon_Code}).then((CouponData) => {
+                let CouponId = CouponData._id;               
+                resolve(CouponId);
+            })
         })
     },
 }

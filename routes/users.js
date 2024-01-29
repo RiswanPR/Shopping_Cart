@@ -3,6 +3,8 @@ var router = express.Router();
 var productHelpers = require('../Helpers/product-helpers')
 var userHelpers = require('../Helpers/user-helpers')
 let coupon = 0;
+let CouponId;
+let couponCheck;
 
 const verifyLogin = (req, res, next) => {
 
@@ -155,9 +157,11 @@ router.get('/cart', verifyLogin, async (req, res, next) => {
   } else if (coupon == 0) {
     console.log("No Actions Received");
   } else if (coupon >= 10) {
-    console.log("User Id : ", req.session.user._id);
-    let UserAuthentication = await userHelpers.getUserAuthentication(req.session.user._id);
-    console.log("User Athentication : ", UserAuthentication);
+
+    let CouponId = await userHelpers.FindCouponById(couponCheck);
+    console.log("Coupon ID", CouponId);
+    let UserAuthentication = await userHelpers.getUserAuthentication(user._id, CouponId);
+
     if (UserAuthentication) {
       couponSuccess = true
       couponValidate = total - 1000
@@ -182,7 +186,7 @@ router.get('/cart', verifyLogin, async (req, res, next) => {
   }
 
   if (couponSuccess) {
-    res.render('user/cart', { footer: true, user, products, cartCount, total, Subtotal, charge, coupon, couponSuccess });
+    res.render('user/cart', { footer: true, user, products, cartCount, total, Subtotal, charge, coupon, couponSuccess, couponCheck });
   } else if (couponFailure) {
     let err = "Coupon Is Invalid Or Not Eligible";
     res.render('user/cart', { footer: true, user, products, cartCount, total, Subtotal, charge, couponSuccess, couponFailure, err });
@@ -194,14 +198,18 @@ router.get('/cart', verifyLogin, async (req, res, next) => {
 
 router.post('/cart', verifyLogin, async (req, res) => {
 
-  let couponCheck = req.body.coupon
+  couponCheck = req.body.coupon
   couponCheck.toString()
   user = req.session.user
-
-  coupon = await userHelpers.CouponCheck(couponCheck, user._id)
+  coupon = await userHelpers.CouponCheck(couponCheck, user._id);
   res.redirect('/cart')
 })
 
+// router.post('/Coupon-Delete',verifyLogin, async (req, res) => {
+//   user = req.session.user._id;
+//   userHelpers.CouponUserDelete(user, )
+// })
+// Make Me a Post Function
 router.get('/add-to-cart/:id', verifyLogin, (req, res, next) => {
   console.log("Api Called");
   userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
@@ -241,8 +249,12 @@ router.get('/place-order', verifyLogin, async (req, res) => {
   } else if (coupon == 0) {
     console.log("No Actions Received");
   } else if (coupon >= 10) {
-    console.log("User Id : ", req.session.user._id);
-    let UserAuthentication = await userHelpers.getUserAuthentication(req.session.user._id);
+
+
+    let CouponId = await userHelpers.FindCouponById(couponCheck);
+
+    let UserAuthentication = await userHelpers.getUserAuthentication(user._id, CouponId);
+
     console.log("User Athentication : ", UserAuthentication);
     if (UserAuthentication) {
       couponSuccess = true
@@ -303,12 +315,16 @@ router.post('/place-order', verifyLogin, async (req, res) => {
   } else {
     console.log("Something Failed", coupon);
   }
+  userHelpers.placeOrder(req.body, products, totalPrice).then((orderId) => {
+    if (req.body['PaymentMethod'] == 'COD') {
+      res.json({ codSuccess: true })
+    } else {
+      userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
+        res.json(response)
+      })
+    }
 
-
-  userHelpers.placeOrder(req.body, products, totalPrice).then((response) => {
-    res.json({ status: true })
   })
-
 })
 
 router.get('/Order-Checkout', verifyLogin, (req, res) => {
@@ -325,41 +341,43 @@ router.get('/orders', verifyLogin, async (req, res) => {
     res.render('user/orders', { user, ordersErr, footer: true });
   } else {
     let len = orders.length;
-  let cancelOrders = [];
-  let placedOrders = [];
-  let shippedOrders = [];
-  let deliveredOrders = [];
+    let cancelOrders = [];
+    let placedOrders = [];
+    let shippedOrders = [];
+    let deliveredOrders = [];
 
-  // Cancelled Orders
-  for (let i = 0; i < len; i++) {
-    if (orders[i] && orders[i].status === "Cancelled") {
-      cancelOrders.push(orders[i]);
+    // Cancelled Orders
+    for (let i = 0; i < len; i++) {
+      if (orders[i] && orders[i].status === "Cancelled") {
+        cancelOrders.push(orders[i]);
+      }
     }
-  }
 
-  // Placed Orders
-  for (let b = 0; b < len; b++) {
-    if (orders[b] && orders[b].status === "Placed") {
-      placedOrders.push(orders[b]);
+    // Placed Orders
+    for (let b = 0; b < len; b++) {
+      if (orders[b] && orders[b].status === "Placed") {
+        placedOrders.push(orders[b]);
+      }
     }
-  }
 
-   // Shipped Orders
-   for (let c = 0; c < len; c++) {
-    if (orders[c] && orders[c].status === "Shipped") {
-      shippedOrders.push(orders[c]);
+    // Shipped Orders
+    for (let c = 0; c < len; c++) {
+      if (orders[c] && orders[c].status === "Shipped") {
+        shippedOrders.push(orders[c]);
+      }
     }
-  }
 
-     // Delivered Orders
-     for (let d = 0; d < len; d++) {
+    // Delivered Orders
+    for (let d = 0; d < len; d++) {
       if (orders[d] && orders[d].status === "Delivered") {
         deliveredOrders.push(orders[d]);
       }
     }
-    res.render('user/orders', { user, orders, footer: true,cancelOrders, shippedOrders ,placedOrders ,deliveredOrders });
+    res.render('user/orders', { user, orders, footer: true, cancelOrders, shippedOrders, placedOrders, deliveredOrders });
   }
-
+})
+router.post('/verify-payment', (req, res) => {
+  console.log(req.body);
 })
 
 router.get('/view-products/:id', verifyLogin, async (req, res) => {
